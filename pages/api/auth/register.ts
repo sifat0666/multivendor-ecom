@@ -6,7 +6,7 @@ import { omit } from "lodash";
 import prisma from "../../../lib/prisma";
 
 export default async function(req: NextApiRequest, res: NextApiResponse){
-    const {name, email, password} = req.body
+    const {email, password} = req.body
     const secret: any = process.env.SECRET
     // console.log(email)
 
@@ -14,8 +14,11 @@ export default async function(req: NextApiRequest, res: NextApiResponse){
 
     if(user) return res.send('user alreadey exists')
 
+    const name = email.match(/^([^@]*)@/)[1];
+
     try {
       const hash = await argon2.hash(password)
+      
       const newUser = await prisma.user.create({
         data: {
           email, password: hash, name

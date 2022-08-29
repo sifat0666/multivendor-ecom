@@ -28,7 +28,7 @@ const Navbar = () => {
         </div>
         <div className='flex items-center justify-between px-6'>
             <div>
-            {user?.email ? (
+            {user?.name ? (
             <div className='flex items-center gap-2 p-1 rounded-lg cursor-pointer hover:bg-light-gray' onClick={() => {}}>            
                 <img 
                     className='w-8 h-8 rounded-full'
@@ -37,7 +37,7 @@ const Navbar = () => {
                 />
                 <p>
                     <span className='text-gray-400 text-14'>Hi, </span>
-                    <span className='ml-1 font-bold text-gray-400 text-14'>{user?.email}</span>
+                    <span className='ml-1 font-bold text-gray-400 text-14'>{user?.name}</span>
                     <MdKeyboardArrowDown className='text-gray-400 text-14' />
                 </p>              
               </div>
