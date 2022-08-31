@@ -63,13 +63,11 @@ const Register = () => {
                 // console.log(data)
                 if(data.message === 'success'){
                     
-                    const authdata = axios.get('http://localhost:3000/api/user', {withCredentials: true}).then(res => addUser(res.data))
-
-                    console.log('authdata', authdata)
 
 
-                    // router.push('/')
-                    // router.reload()
+
+                    router.push('/')
+                    router.reload()
                 }
             })
             .then(err => console.log('err',err));
@@ -88,7 +86,11 @@ const Register = () => {
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <div className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                   <GoogleLogin 
-                    onSuccess={response => createOrGetUser(response)}
+                    onSuccess={async (response) => {
+                        await createOrGetUser(response)
+                        // setTimeout(router.reload, 3000)
+                        router.reload()
+                    }}
                     onError={() => console.log('err')}
                   
                   />
