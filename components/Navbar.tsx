@@ -5,20 +5,26 @@ import React from 'react'
 import { FaShoppingCart } from 'react-icons/fa'
 import {SiAnalogue} from 'react-icons/si'
 import {MdKeyboardArrowDown} from 'react-icons/md'
+import useAuthStore from '../store/authStore'
+
+
+
 
 
 const Navbar = () => {
 
 
-    const {data: user} = useQuery(['user'], () => axios.get('http://localhost:3000/api/user', {withCredentials: true}).then(res => res.data))
+    
+    const {userProfile, addUser, removeUser} : any = useAuthStore()
 
+    // console.log(user)
 
-    console.log('user',user)
+    // console.log('user',user)
 
   return (
     <div className='flex items-center justify-between p-6 border-b-2 border-gray-200'>
         <Link href='/'>
-            <div className='flex items-center px-6 pr-12 text-3xl'>
+            <div className='flex items-center px-6 text-3xl cursor-pointer'>
                 <SiAnalogue />
                 <p className='p-2 texl-xl'>Ecom</p>
             </div>
@@ -28,7 +34,7 @@ const Navbar = () => {
         </div>
         <div className='flex items-center justify-between px-6'>
             <div>
-            {user?.name ? (
+            {userProfile.name ? (
             <div className='flex items-center gap-2 p-1 rounded-lg cursor-pointer hover:bg-light-gray' onClick={() => {}}>            
                 <img 
                     className='w-8 h-8 rounded-full'
@@ -37,7 +43,7 @@ const Navbar = () => {
                 />
                 <p>
                     <span className='text-gray-400 text-14'>Hi, </span>
-                    <span className='ml-1 font-bold text-gray-400 text-14'>{user?.name}</span>
+                    <span className='ml-1 font-bold text-gray-400 text-14'>{userProfile?.name}</span>
                     <MdKeyboardArrowDown className='text-gray-400 text-14' />
                 </p>              
               </div>

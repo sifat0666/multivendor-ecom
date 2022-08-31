@@ -5,6 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
+import { createOrGetUser } from '../../utils';
+import useAuthStore from '../../store/authStore';
 
 
 type Inputs = {
@@ -37,6 +40,8 @@ const createUserSchema = object({
 
 const Register = () => {
 
+    const {addUser} = useAuthStore()
+
 
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>({
         resolver: zodResolver(createUserSchema)
@@ -53,10 +58,13 @@ const Register = () => {
                 value,
                 { withCredentials: true }
             ).then(res => {
-                console.log("res", res)
+                // console.log("res", res)
                 const data = res.data 
+                // console.log(data)
                 if(data.message === 'success'){
+                    addUser(data)
                     router.push('/')
+                    router.reload()
                 }
             })
             .then(err => console.log('err',err));
@@ -73,9 +81,13 @@ const Register = () => {
 
         <div className="w-full h-full bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                   googleLogin 
-                </a>
+                <div className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                  <GoogleLogin 
+                    onSuccess={response => createOrGetUser(response)}
+                    onError={() => console.log('err')}
+                  
+                  />
+                </div>
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">

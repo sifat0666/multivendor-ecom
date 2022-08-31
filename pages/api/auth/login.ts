@@ -29,9 +29,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         path: '/'
     })
 
+    const response = omit(user, "password")
 
     res.setHeader('Set-Cookie', serialsed)
 
-    res.status(200).json({message: 'success'})
+    res.status(200).json({ ...response ,message: 'success'})
 
 }

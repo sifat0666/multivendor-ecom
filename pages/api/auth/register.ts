@@ -21,7 +21,7 @@ export default async function(req: NextApiRequest, res: NextApiResponse){
       
       const newUser = await prisma.user.create({
         data: {
-          email, password: hash, name
+          email, password: hash, name, type: 'user'
         }
       })
 
@@ -35,9 +35,11 @@ export default async function(req: NextApiRequest, res: NextApiResponse){
           path: '/'
       })
 
+      const response = omit(newUser, 'password')
+
 
       res.setHeader('Set-Cookie', serialsed)
-      res.json({message: 'success'})
+      res.json({...response, message: 'success'})
     } catch (error) {
       console.log(error)
     }

@@ -1,7 +1,9 @@
 import axios from 'axios'
+import { omit } from 'lodash';
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import useAuthStore from '../../store/authStore';
 
 type Inputs = {
     email: string,
@@ -13,6 +15,7 @@ const Login = () => {
 
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>()
     const router = useRouter()
+    const {addUser} = useAuthStore()
 
 
     const onSubmit: SubmitHandler<Inputs> = async value => {
@@ -25,7 +28,9 @@ const Login = () => {
                 console.log("res", res)
                 const data = res.data 
                 if(data.message === 'success'){
+                    addUser(data)
                     router.push('/')
+                    router.reload()
                 }
             })
             .then(err => console.log('err',err));
