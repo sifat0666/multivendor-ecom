@@ -28,7 +28,7 @@ const Login = () => {
                 console.log("res", res)
                 const data = res.data 
                 if(data.message === 'success'){
-                    addUser(data)
+                    axios.get('http://localhost:3000/api/user', {withCredentials: true}).then(res => addUser(res.data))
                     router.push('/')
                     router.reload()
                 }

@@ -34,7 +34,7 @@ const Navbar = () => {
         </div>
         <div className='flex items-center justify-between px-6'>
             <div>
-            {userProfile.name ? (
+            {userProfile?.name ? (
             <div className='flex items-center gap-2 p-1 rounded-lg cursor-pointer hover:bg-light-gray' onClick={() => {}}>            
                 <img 
                     className='w-8 h-8 rounded-full'

@@ -40,9 +40,9 @@ const createUserSchema = object({
 
 const Register = () => {
 
-    const {addUser} = useAuthStore()
+    const {addUser, removeUser} = useAuthStore()
 
-
+    // removeUser()
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>({
         resolver: zodResolver(createUserSchema)
     })
@@ -62,9 +62,14 @@ const Register = () => {
                 const data = res.data 
                 // console.log(data)
                 if(data.message === 'success'){
-                    addUser(data)
-                    router.push('/')
-                    router.reload()
+                    
+                    const authdata = axios.get('http://localhost:3000/api/user', {withCredentials: true}).then(res => addUser(res.data))
+
+                    console.log('authdata', authdata)
+
+
+                    // router.push('/')
+                    // router.reload()
                 }
             })
             .then(err => console.log('err',err));
