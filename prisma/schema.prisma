@@ -17,4 +17,19 @@ model User {
   password String?
   picture String?
   type String?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  products         Product[]
+  @@map(name: "users")
+}
+
+model Product {
+  id        String     @default(cuid()) @id
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  String?
+  image String?
+  price Int? @default(0)
 }

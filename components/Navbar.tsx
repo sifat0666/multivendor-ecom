@@ -6,16 +6,18 @@ import { FaShoppingCart } from 'react-icons/fa'
 import {SiAnalogue} from 'react-icons/si'
 import {MdKeyboardArrowDown} from 'react-icons/md'
 import useAuthStore from '../store/authStore'
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import user from '../pages/api/user'
 import { useRouter } from 'next/router'
+import { useCartContext } from '../context/CartContext';
 
 
 
 
 
-const Navbar = () => {
+const Navbar = ({children}: {children: ReactNode}) => {
 
+    const {setIsOpen, totalQuantity}: any = useCartContext()
 
    const {data: user, isLoading} = useQuery(['user'], () => axios.get('http://localhost:3000/api/user', {withCredentials: true}).then(res => res.data)) 
 
@@ -31,11 +33,12 @@ const Navbar = () => {
   }
 
   return (
+    <div>
     <div className='flex items-center justify-between p-6 border-b-2 border-gray-200'>
         <Link href='/'>
             <div className='flex items-center px-6 text-3xl cursor-pointer'>
                 <SiAnalogue />
-                <p className='p-2 texl-xl'>Ecom</p>
+                <p className='p-2 text-gray-600 texl-xl'>Ecom</p>
             </div>
         </Link>
         <div>
@@ -64,12 +67,12 @@ const Navbar = () => {
               ): (
                 <div className='flex items-center gap-2 p-1'>
                     <Link href='/auth/register'>
-                        <div className='p-2 text-lg font-bold underline cursor-pointer'>
+                        <div className='p-2 text-lg font-bold text-gray-500 underline cursor-pointer'>
                             Register
                         </div>
                     </Link>            
                     <Link href='/auth/login' >
-                        <button className='p-2 m-2 font-semibold bg-blue-500 rounded-xl'>
+                        <button className='p-2 m-2 font-semibold text-white bg-blue-500 rounded-xl'>
                             Login
                         </button>
                     </Link>
@@ -98,11 +101,15 @@ const Navbar = () => {
                 </ul>
             </div>   
             </div>
-            
-            <button className='pl-5'>
-                <FaShoppingCart className='text-2xl' />
-            </button>
+            <Link href='/cart'>
+                <button className='static pl-5' >
+                    {totalQuantity > 0 && (<div className='absolute flex items-center justify-center w-4 h-4 p-3 ml-5 text-sm text-white bg-red-500 rounded-full top-7'>{totalQuantity}</div>)}
+                    <FaShoppingCart className='text-2xl text-gray-500' />
+                </button>
+            </Link>   
         </div>
+    </div>
+    {children}
     </div>
   )
 }

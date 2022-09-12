@@ -3,6 +3,7 @@ import { omit } from 'lodash';
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import toast from 'react-hot-toast';
 import useAuthStore from '../../store/authStore';
 
 type Inputs = {
@@ -30,7 +31,10 @@ const Login = () => {
                 if(data.message === 'success'){
                     router.push('/')
                     router.reload()
+                }else{
+                    toast.error(data.err)
                 }
+
             })
             .then(err => console.log('err',err));
             

@@ -17,7 +17,6 @@ export default async function(req:NextApiRequest, res:NextApiResponse){
 
     try {
      const payload = verify(jwt, process.env.SECRET!)
-     console.log(payload)
      res.json(payload)
     } catch (error) {
         res.json({error: 'invalid token'})

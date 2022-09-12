@@ -8,6 +8,7 @@ import axios from 'axios';
 import { GoogleLogin } from '@react-oauth/google';
 import { createOrGetUser } from '../../utils';
 import useAuthStore from '../../store/authStore';
+import toast from 'react-hot-toast';
 
 
 type Inputs = {
@@ -62,12 +63,10 @@ const Register = () => {
                 const data = res.data 
                 // console.log(data)
                 if(data.message === 'success'){
-                    
-
-
 
                     router.push('/')
-                    router.reload()
+                    toast.success('succesfully created account')
+                    
                 }
             })
             .then(err => console.log('err',err));
@@ -88,8 +87,10 @@ const Register = () => {
                   <GoogleLogin 
                     onSuccess={async (response) => {
                         await createOrGetUser(response)
-                        // setTimeout(router.reload, 3000)
-                        router.reload()
+                        // router.reload()
+                        router.push('/')
+
+                        setTimeout(() => router.reload(), 2000)
                     }}
                     onError={() => console.log('err')}
                   

@@ -2,6 +2,10 @@ import axios from "axios";
 import { decode } from "jsonwebtoken";
 import { useRouter } from "next/router";
 
+
+export const BASE_URL = process.env.BASE_URL!
+
+
 export const createOrGetUser = async (response: any ,addUser?: any) => {
 
     // console.log(response.credential)
