@@ -7,11 +7,11 @@ import { getUser } from "../../../utils/getUser";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const {img, title, content, price} = req.body
 
-    const uploadImageRespoce = await cloudinary.uploader.upload(img, {
+    const uploadImageResponce = await cloudinary.uploader.upload(img, {
         upload_preset: 'next-ecom'
     })
 
-    const imageUrl = uploadImageRespoce.url as string
+    const imageUrl = uploadImageResponce.url as string
 
     const priceInt= parseFloat(price)
 
@@ -29,5 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
      console.log(error)   
     }
 
+    res.end()
 
 }

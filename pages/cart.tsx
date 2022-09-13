@@ -4,7 +4,7 @@ import { useCartContext } from '../context/CartContext';
 
 const Cart = () => {
 
-    const {items } = useCartContext()
+    const {items, totalQuantity } = useCartContext()
 
 
 
@@ -15,7 +15,7 @@ const Cart = () => {
             <div className="w-3/4 px-10 py-10 bg-white">
                 <div className="flex justify-between pb-8 border-b">
                 <h1 className="text-2xl font-semibold">Shopping Cart</h1>
-                <h2 className="text-2xl font-semibold">3 Items</h2>
+                <h2 className="text-2xl font-semibold">Items {totalQuantity}</h2>
                 </div>
                 <div className="flex mt-10 mb-5">
                 <h3 className="w-2/5 text-xs font-semibold text-gray-600 uppercase">Product Details</h3>
@@ -63,7 +63,7 @@ const Cart = () => {
             <div id="summary" className="w-1/4 px-8 py-10">
                 <h1 className="pb-8 text-2xl font-semibold border-b">Order Summary</h1>
                 <div className="flex justify-between mt-10 mb-5">
-                <span className="text-sm font-semibold uppercase">Items 3</span>
+                <span className="text-sm font-semibold uppercase">Items {totalQuantity}</span>
                 <span className="text-sm font-semibold">590$</span>
                 </div>
                 <div>

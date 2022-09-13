@@ -24,9 +24,9 @@ const Home: NextPage = () => {
       {data ? data.map((product: IProduct) => (
         
         <div className="container w-full max-w-sm m-5 bg-white rounded-lg shadow-md">
-            <a href="#">
+            <Link href={`/product/${product.id}`}>
                 <img className="p-8 rounded-t-lg" src={product.image} alt="product image" />
-            </a>
+            </Link>
             <div className="px-5 pb-5">
                 <a href="#">
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900">{product.title}</h5>
